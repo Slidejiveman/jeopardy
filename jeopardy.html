@@ -1,0 +1,312 @@
+<html>
+<head>
+<style>
+h1 {font-family: Georgia; font-size: 48px; color: #FFFFFF; text-shadow: 2px 2px #000000; -webkit-margin-before: 0px; -webkit-margin-after: 0px;}
+h2 {font-family: Impact; font-size: 24px; color: #FFFFFF; text-shadow: 2px 2px #000000; -webkit-margin-before: 0px; -webkit-margin-after: 0px;}
+h3 {font-family: Impact; font-size: 42px; color: #FFCC00; text-shadow: 2px 2px #000000; -webkit-margin-before: 0px; -webkit-margin-after: 0px;}
+h4 {font-family: Impact; font-size: 80px; color: #FFFFFF; text-shadow: 2px 2px #000000; -webkit-margin-before: 0px; -webkit-margin-after: 0px;}
+h5 {font-family: Arial; font-size: 30px; color: #FFFFFF; text-shadow: 2px 2px #000000; -webkit-margin-before: 0px; -webkit-margin-after: 0px;}
+pre {font-family: Courier; font-size: 36px; color: #FFFFFF; text-shadow: 2px 2px #000000; -webkit-margin-before: 0px; -webkit-margin-after: 0px;}
+td {vertical-align: middle;}
+</style>
+<title>Ghetto Jeopardy v.02</title>
+<script language = 'javascript'>
+<!--
+var used = 0
+var scale = 100;
+var dd = 0
+var round = 1;
+var players = 3
+var names = [];
+var scores = [];
+var wagers = [];
+var control = 0;
+var wager = 0;
+var categories = ['EXPRESS ME REGULARLY',
+                  'THE SHORTEST STRING',
+									'AUTOMATA AND THE STRINGS THAT LOVE THEM',
+									'LANGUAGES OUT OF CONTEXT',
+									'BINDING ARRANGEMENTS',
+									'ESOTERICA',
+									'IN"CON"CIEVABLE',
+									'MY OTHER CAR IS A CDR',
+									'I\'LL PARSE YOUR BNF',
+									'FUZZY LOGIC',
+									'MARIO TEACHES DATA TYPING',
+									'STUPID ANSWERS',
+									'STATE<BR>MACHINES']
+var answers = ['THE LANGUAGE OF ALL STRINGS OF A\'S AND B\'S THAT BEGIN WITH A',
+               'THE LANGUAGE CONTAINING ONLY THE EMPTY STRING',
+							 'THE LANGUAGE OF ALL STRINGS OF A\'S AND B\'S WHERE EVERY B IS FOLLOWED IMMEDIATELY BY AN A',
+							 'THE LANGUAGE OF ALL BINARY STRINGS DIVISIBLE BY 4',
+							 'THE LANGUAGE OF ALL BINARY STRINGS DIVISIBLE BY 3',
+							 'THE SHORTEST STRING REPRESENTED BY THE REGULAR EXPRESSION:<BR><PRE>(a+b)*ab*+bba*</PRE>',
+               'THE SHORTEST STRING ACCEPTED BY THE FOLLOWING FINITE STATE MACHINE:<BR><IMG HEIGHT=50% SRC=r1c2a2.png>',
+							 'THE SHORTEST STRING CONTAINING AN a PRODUCED BY THE REGULAR EXPRESSION:<BR><PRE>(ba+abb)*+(bbba)+(bab)</PRE>',
+							 'THE SHORTEST STRING PRODUCED BY THE FOLLOWING CONTEXT FREE GRAMMAR (WITH START SYMBOL A):<BR><PRE>A -> aA | aBB\nB -> A | aB | CaC\nC -> A | Bb | bb</PRE>',
+							 'THE SHORTEST STRING PRODUCED BY THE FOLLOWING EBNF GRAMMAR (WITH INITIAL NONTERMINAL &lt;a&gt;):<BR><PRE>&lt;a&gt; -> {&lt;b&gt; | &lt;c&gt;}\n&lt;b&gt; -> begin &lt;c&gt; end\n&lt;c&gt; -> nope</PRE>',
+							 'A FINITE STATE MACHINE IN WHICH EXACTLY ONE PATH EXISTS FOR EVERY POSSIBLE INPUT IS CALLED THIS.',
+               'THE NUMBER OF STRINGS ACCEPTED BY THE FOLLOWING FINITE STATE MACHINE:<BR><IMG HEIGHT=50% SRC=r1c3a2.png>',
+							 'A STRING OF LENGTH 5 ACCEPTED BY THE FOLLOWING FINITE STATE MACHINE:<BR><IMG HEIGHT=50% SRC=r1c3a3.png>',
+							 'A REGULAR EXPRESSION FOR THE LANGUAGE ACCEPTED BY THE FOLLOWING FINITE STATE MACHINE:<BR><IMG HEIGHT=50% SRC=r1c3a4.png>',
+							 'THE NUMBER OF LANGUAGES THAT EXIST THAT ARE RECOGNIZABLE BY A NONDETERMINISTIC FINITE STATE MACHINE, BUT NOT A DETERMINISTIC ONE.',
+							 'THIS MUST APPEAR ON THE LEFT HAND SIDE OF ALL CONTEXT-FREE GRAMMAR RULES.',
+               'AN EXAMPLE OF A LANGUAGE THAT IS CONTEXT-FREE, BUT NOT REGULAR.',
+							 'THE TYPE OF AUTOMATON WHICH RECOGNIZES CONTEXT-FREE LANGUAGES.',
+							 'A CONTEXT-FREE GRAMMAR WHICH PRODUCES THE SAME LANGUAGE AS THE REGULAR EXPRESSION:<BR><PRE>ab*a(ba)*</PRE>',
+							 'OF UNION, INTERSECTION, AND CONCATENATION, THE ONE UNDER WHICH CONTEXT-FREE LANGUAGES ARE NOT CLOSED.',
+							 'A LANGUAGE THAT HAS DYNAMIC TYPE BINDING.',
+               'FOUR OF THE ATTRIBUTES OF VARIABLES THAT MUST BE BOUND.',
+							 'THIS IS A REFERENCE TO A VARIABLE THAT IS NO LONGER ALLOCATED.',
+							 'OF SCOPE, VALUE, TYPE, AND LIFETIME, THE ONE THAT IS LEAST LIKELY TO BE BOUND AT COMPILE TIME.',
+							 'THIS IS THE COLLECTION OF ALL VARIABLES THAT ARE VISIBLE TO A GIVEN STATEMENT.',
+							 'THE ESOTERIC PROGRAMMING LANGUAGE WHOSE SOURCE CODE CAN BE SEEN HERE:<BR><PRE>>               v\nv"Hello, world!"&lt;\n>,,,,,,,,,,,,@  </PRE>',
+               'THE ESOTERIC PROGRAMMING LANGUAGE WHOSE SOURCE CODE CAN BE SEEN HERE:<BR><PRE>Hamlet, a troubled youth.\nOphelia, a fishmonger.\n     Act I: Preparation</PRE>',
+							 'THE ESOTERIC PROGRAMMING LANGUAGE WHOSE SOURCE CODE CAN BE SEEN HERE:<BR><IMG HEIGHT=50% SRC=r1c6a3.png>',
+							 'THE ESOTERIC PROGRAMMING LANGUAGE WHOSE SOURCE CODE CAN BE SEEN HERE:<BR><PRE>(=&lt;`#9]~6ZY32Vx/4Rs+0No-&amp;Jk)"Fh}|Bcy?`=*z]Kw%oG4UUS0/@-ejc(:\'8dc',
+							 'THE ESOTERIC PROGRAMMING LANGUAGE WHOSE SOURCE CODE CAN BE SEEN HERE:',
+							 'MOST PROGRAMMING LANGUAGES FALL INTO THIS THEORETICAL CATEGORY OF LANGUAGES.',
+               'IF STATEMENTS, WHILE LOOPS, AND FOR LOOPS ARE ALL THESE TYPE OF STRUCTURES.',
+							 'REGULAR LANGUAGES ARE CLOSED UNDER UNION, INTERSECTION, KLEENE STAR, AND THIS.',
+							 'IT\'S THE TERM FOR A LANGUAGE THAT IS NOT CONTEXT-FREE.',
+							 'PROLOG, IN ORDER TO PROVE A GOAL, NEGATES THE GOAL, ADDS THAT TO THE FACTS, AND ATTEMPTS TO FIND THIS.',
+							 'THE EXPRESSION WHICH ADDS 3 AND 4 IN LISP.',
+               'AS OPPOSED TO IMPERATIVE LANGUAGES, LISP IS AN EXAMPLE OF THIS TYPE OF PROGRAMMING LANGUAGE.',
+							 'IT\'S THE VALUE OF THE FOLLOWING LISP EXPRESSION:<BR><PRE>(car (car (cdr (car \'((4 (5 3 2) (1 4)) 7 (3 2 4))))))</PRE>',
+							 'IT\'S THE VALUE OF THE FOLLOWING LISP EXPRESSION:<BR><PRE>(mapcar #\'* \'(3 1 4) \'(7 2 1))</PRE>',
+							 'IT\'S THE VALUE OF THE FOLLOWING LISP EXPRESSION:<BR><PRE>(reduce #\'* \'(7 5 3))</PRE>',
+							 'THIS PARSER, ALSO KNOWN AS AN LL PARSER, USES A FUNCTION FOR EVERY NONTERMINAL SYMBOL.',
+               'ONE OF THE DIFFERENCES BETWEEN BNF AND EBNF.',
+							 'THIS TYPE OF PARSER IS AN IMPLEMENTATION OF A PUSHDOWN AUTOMATON.',
+							 'LEFTMOST DETERMINATION IS A PROPERTY REQUIRED BY LL PARSERS. THIS TEST CAN BE USED TO PROVE LEFTMOST DETERMINATION.',
+							 'IT\'S THE REASON STRINGS IN THE FOLLOWING BNF GRAMMAR CANNOT BE PARSED:<BR><PRE>&lt;a&gt; -> &lt;b&gt; | &lt;c&gt;\n&lt;b&gt; -> b&lt;a&gt;\n\n&lt;c&gt; -> a&lt;b&gt;',
+							 'THESE ARE THE TWO TYPES OF STATEMENTS IN LOGIC PROGRAMMING.',
+               'THIS IS THE NAME OF THE NOTATION USED IN LOGIC PROGRAMMING.',
+							 'GIVEN THE FOLLOWING PROLOG FACTS:<BR><PRE>brother(robert,phillip).\nbrother(robert,bryan).</PRE><BR>IT\'S WHAT PROLOG WOULD RETURN FROM THE QUERY:<BR><PRE>:- brother(bryan,X).</PRE>',
+							 'REPRESENTED BY !, THIS PROLOG CONSTRUCT PREVENTS BACKTRACKING.',
+							 'GIVEN THE FOLLOWING PROLOG FACTS AND RULES:<BR><PRE>p(X,0,X).\np(X,s(Y),Z) :- p(s(X),Y,Z).</PRE>IT\'S WHAT PROLOG WOULD RETURN FROM THE QUERY:<BR><PRE>:- p(s(0),s(s(0)),X).</PRE>',
+							 'IT\'S-A-ME! THE DATA TYPE USED TO EXACTLY REPRESENT BASE-10 NUMBERS!',
+               'YIPPEE! I\'MA THE TYPE THAT ALLOWS MULTIPLE VARIABLES TO OCCUPY THE SAME MEMORY SPACE!',
+							 'OWOWOWOWOW! IN C, I\'MA JUST AN ARRAY OF CHARACTERS!',
+							 'HERE WE GO! I CAN REPRESENT AN INTEGER OF ARBITRARY SIZE.',
+							 'MAMMA MIA! MY LANGUAGE ALWAYS DETECTS TYPE ERRORS AND HAS THIS PROPERTY.',
+							 'IT\'S THE RUNTIME BINDING OF TYPES TO VARIABLES IN A DYNAMIC MANNER.',
+               'THESE FIELD REFERENCES, LIKE AN ELLIPSIS, OMIT THE RECORD NAME.',
+							 'WHEN PASSING PARAMETERS IN THIS WAY, THE NAME OF THE ACTUAL PARAMETER IS SUBSTITUTED IN FOR THE FORMAL PARAMETERS.',
+							 'STATEMENTS IN THIS ESOTERIC PROGRAMMING LANGUAGE ARE EXECUTED WHENEVER THEY FEEL LIKE IT.',
+							 'THESE VALUE TYPES RECORD MULTIPLE DATA ELEMENTS, AND ARE SIMILAR TO OBJECTS (WITHOUT METHODS).',
+							 'THE NUMBER OF FOUR CHARACTER STRINGS ACCEPTED BY THE FOLLOWING FINITE STATE MACHINE:<BR><IMG HEIGHT=50% SRC=fj.png>'];
+
+function getDD(r)
+{
+	var ret = 0;
+	var x = Math.floor(Math.random()*24);
+	x += Math.floor(x/4)+1;
+	ret |= (1<<x);
+	if(r==2)
+	{
+		var y = Math.floor(Math.random()*24);
+		y += Math.floor(y/4)+1;
+		while(Math.floor(y/5) == Math.floor(x/5)) {
+		y = Math.floor(Math.random()*24);
+		y += Math.floor(y/4)+1;
+		}
+		ret |= (1<<y);
+	}
+	return ret
+}
+							 
+function getBoard() {
+	output = "<TABLE BORDER = 1 WIDTH=100% HEIGHT=88% STYLE='margin: 0px;'>"
+	output += getCategoryRow()
+	for(var i = 0; i < 5; i++) {
+	  output += getQuestionRow(i)
+	}
+	output += "</TABLE>"
+	return output
+}
+
+function getCategoryRow() {
+	output = "<TR HEIGHT=16%>"
+	for(var i = 0; i < 6; i++) {
+		output += "<TD ALIGN = CENTER WIDTH=16%><h2>"+categories[i+(round-1)*6]+"</h2></TD>"
+	}
+	output += "</TR>"
+	return output
+}
+
+function getQuestionRow(k) {
+	output = "<TR HEIGHT=16%>"
+	for(var i = 0; i < 6; i++) {
+		output += "<TD ALIGN='center' VALIGN='center' WIDTH=16%>"
+		if(((1<<(k+i*5))&used) == 0) {
+			output += "<h3><A ONCLICK='"
+			if(((1<<(k+i*5))&dd) != 0) {
+				output += "dailyDouble("+(k+i*5)+")"
+			}
+			else {
+				output += "answer("+(k+i*5)+")"
+			}
+			output += "'>"+(k+1)*scale*round+"</A></h3>"
+		}
+		output += "</TD>"
+	}
+	output += "</TR>"
+	return output
+}
+
+function intro() {
+	document.getElementById('main').innerHTML = "<TABLE WIDTH=100% HEIGHT=100% STYLE='margin: 0px;'><TR HEIGHT = 100%><TD WIDTH = 100% ALIGN='center' VALIGN='center'><H4><A ONCLICK='category(0)'>JEOPARDY!</A></H4></TD></TR></TABLE>";
+}
+
+function category(a) {
+	output = 
+	"<TABLE WIDTH=100% HEIGHT=88% STYLE='margin: 0px;'><TR HEIGHT = 100%><TD WIDTH = 100% ALIGN='center' VALIGN='center'><H4><A ONCLICK='"
+	if(a==5) {
+	  output += "returnToBoard()"
+	}
+	else {
+	  output += "category("+(a+1)+")"
+	}
+	output += "'>"+categories[a+(round-1)*6]+"</A></H4></TD></TR></TABLE>"
+	document.getElementById('main').innerHTML = output
+}
+
+function nextRound() {
+	used = (1<<30)-1
+	returnToBoard()
+}
+								
+function answer(a) {
+	document.getElementById('main').innerHTML = "<TABLE WIDTH=100% HEIGHT=88% STYLE='margin: 0px;'><TR HEIGHT = 100%><TD WIDTH = 100% ALIGN='center' VALIGN='center'><H1><A ONCLICK='returnToBoard()'>"+answers[a+(round-1)*30]+"</A></H1></TD></TR></TABLE>";
+	makeButtons((a%5+1)*round*scale)
+	used |= (1<<a);
+}
+
+function ddAnswer(a) {
+	wager = parseInt(prompt(names[control]+", Your Wager? Max: "+Math.max(scores[control],5*scale*round),"0"))
+	while(wager < 0 || wager > scores[control] && wager > 5*scale*round) {
+		wager = parseInt(prompt("Invalid Wager.  Your Wager?","0"))
+	}
+	document.getElementById('main').innerHTML = "<TABLE WIDTH=100% HEIGHT=88% STYLE='margin: 0px;'><TR HEIGHT = 100%><TD WIDTH = 100% ALIGN='center' VALIGN='center'><H1><A ONCLICK='returnToBoard()'>"+answers[a+(round-1)*30]+"</A></H1></TD></TR></TABLE>";
+	makeButton(control,wager)
+	used |= (1<<a);
+}	
+
+function dailyDouble(a) {
+	document.getElementById('main').innerHTML = "<TABLE WIDTH=100% HEIGHT=100% STYLE='margin: 0px;'><TR HEIGHT = 100%><TD WIDTH = 100% ALIGN='center' VALIGN='center'><H4><A ONCLICK='ddAnswer("+a+")'>DAILY<BR>DOUBLE</A></H4></TD></TR></TABLE>";
+}
+
+function returnToBoard() {
+    removeButtons();
+		if(used!=(1<<30)-1) {
+		  document.getElementById('main').innerHTML = getBoard()
+		}
+		else if(round==1)
+		{
+			round++;
+			used=0;
+			dd = getDD(round);
+			control = 0;
+			for(var i = 0; i < players; i++) {
+				if(scores[control] > scores[i]) {
+					control = i
+				}
+			}
+			category(0);
+		}
+		else {
+		  finalJeopardy();
+		}
+}
+
+function emergencyUpdate(p) {
+	scores[p] = parseInt(prompt("Enter score for "+names[p],scores[p]))
+	document.getElementById('p'+p+'score').innerHTML = "<A onClick=emergencyUpdate("+p+")>"+names[p]+": "+scores[p]+"</A>"
+}
+
+function correct(p,q) {
+	scores[p] += q
+	document.getElementById('p'+p+'score').innerHTML = "<A onClick=emergencyUpdate("+p+")>"+names[p]+": "+scores[p]+"</A>"
+	control = p
+	returnToBoard();
+}
+
+function incorrect(p,q) {
+	scores[p] -= q
+	document.getElementById('p'+p+'score').innerHTML = "<A onClick=emergencyUpdate("+p+")>"+names[p]+": "+scores[p]+"</A>"
+	document.getElementById('p'+p+'buttons').innerHTML = ""
+}
+
+function makeButtons(q) {
+	for(var i = 0; i < players; i++) {
+		document.getElementById('p'+i+'buttons').innerHTML = "<A onClick=correct("+i+","+q+")><img width=8%  src=yes.png></A> &nbsp; <A onClick=incorrect("+i+","+q+")><img width=8%  src=no.png></A>"
+  }
+}
+
+function makeButton(i,q) {
+		document.getElementById('p'+i+'buttons').innerHTML = "<A onClick=correct("+i+","+q+")><img width=8%  src=yes.png></A> &nbsp; <A onClick=incorrect("+i+","+q+")><img width=8%  src=no.png></A>"
+}
+
+function removeButtons(q) {
+	for(var i = 0; i < players; i++) {
+		document.getElementById('p'+i+'buttons').innerHTML = ""
+  }
+}
+
+function finalJeopardy() {
+	document.getElementById('main').innerHTML = "<TABLE WIDTH=100% HEIGHT=88% STYLE='margin: 0px;'><TR HEIGHT = 100%><TD WIDTH = 100% ALIGN='center' VALIGN='center'><H4><A ONCLICK='fjc()'>FINAL<BR>JEOPARDY!</A></H4></TD></TR></TABLE>";
+}
+
+function fjc() {
+	document.getElementById('main').innerHTML = "<TABLE WIDTH=100% HEIGHT=88% STYLE='margin: 0px;'><TR HEIGHT = 100%><TD WIDTH = 100% ALIGN='center' VALIGN='center'><H4><A ONCLICK='fjq()'>"+categories[categories.length-1]+"</A></H4></TD></TR></TABLE>";
+}
+
+function fjq() {
+	for(var i = 0; i < players; i++) {
+		wagers[i] = parseInt(prompt("Wager for "+names[i],"0"))
+	}
+	document.getElementById('main').innerHTML = "<TABLE WIDTH=100% HEIGHT=88% STYLE='margin: 0px;'><TR HEIGHT = 100%><TD WIDTH = 100% ALIGN='center' VALIGN='center'><H1>"+answers[answers.length-1]+"</H1></TD></TR></TABLE>";	
+	fjbuttons();
+}
+
+function fjbuttons() {
+	for(var i = 0; i < players; i++) {
+		document.getElementById('p'+i+'buttons').innerHTML = "<A onClick=incorrect("+i+","+(-wagers[i])+")><img width=8%  src=yes.png></A> &nbsp; <A onClick=incorrect("+i+","+wagers[i]+")><img width=8%  src=no.png></A>"
+  }
+}
+function setUpPlayers() {
+	var scoreboardhtml = "<TABLE CELLPADDING=0 WIDTH=100%><TR><TD WIDTH=5%><A onClick='nextRound()'>X</A></TD>"
+	for(var i = 0; i < players; i++) {
+		names[i] = prompt("Name of Player "+(i+1))
+		scores[i] = 0
+		scoreboardhtml += "<TD ALIGN=CENTER><h5><div id=p"+i+"score><A onClick=emergencyUpdate("+i+")>"+names[i]+": "+scores[i]+"</A></div></h5></TD>"
+	}
+	scoreboardhtml += "</TR><TR><TD></TD>"
+	for(var i = 0; i < players; i++) {
+		scoreboardhtml += "<TD ALIGN = CENTER><div id=p"+i+"buttons></div></TD>"
+	}
+	scoreboardhtml += "</TR></TABLE>"
+	document.getElementById('scoreboard').innerHTML = scoreboardhtml
+}
+
+window.onload = function() {
+		intro();
+		players = parseInt(prompt("How Many Players?","3"))
+		setUpPlayers();
+		dd = getDD(round);
+		//document.getElementById('trialclick').addEventListener("click",getTrial);
+		//document.getElementById('trialclick').addEventListener("touchstart",getTrial,false);
+		//document.getElementById('resclick').addEventListener("click",getRestriction);
+    //document.getElementById('resclick').addEventListener("touchstart",getRestriction,false);
+}
+-->
+</script>
+<head>
+<body bgcolor = #0000FF>
+<div id='scoreboard'>
+</div>
+<div id='main'>
+</div>
+</body>
+</html>

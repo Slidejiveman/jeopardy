@@ -1,0 +1,265 @@
+<html>
+<head>
+<style>
+h1 {font-family: Georgia; font-size: 48px; color: #FFFFFF; text-shadow: 2px 2px #000000; -webkit-margin-before: 0px; -webkit-margin-after: 0px;}
+h2 {font-family: Impact; font-size: 24px; color: #FFFFFF; text-shadow: 2px 2px #000000; -webkit-margin-before: 0px; -webkit-margin-after: 0px;}
+h3 {font-family: Impact; font-size: 42px; color: #FFCC00; text-shadow: 2px 2px #000000; -webkit-margin-before: 0px; -webkit-margin-after: 0px;}
+h4 {font-family: Impact; font-size: 80px; color: #FFFFFF; text-shadow: 2px 2px #000000; -webkit-margin-before: 0px; -webkit-margin-after: 0px;}
+h5 {font-family: Arial; font-size: 30px; color: #FFFFFF; text-shadow: 2px 2px #000000; -webkit-margin-before: 0px; -webkit-margin-after: 0px;}
+pre {font-family: Courier; font-size: 36px; color: #FFFFFF; text-shadow: 2px 2px #000000; -webkit-margin-before: 0px; -webkit-margin-after: 0px;}
+td {vertical-align: middle;}
+</style>
+<title>Ghetto Jeopardy - Study Edition v.02</title>
+<script language = 'javascript'>
+<!--
+var used = 0;
+var scale = 100;
+var round = 1;
+
+var categories = ['EXPRESS ME REGULARLY',
+                  'THE SHORTEST STRING',
+									'AUTOMATA AND THE STRINGS THAT LOVE THEM',
+									'LANGUAGES OUT OF CONTEXT',
+									'BINDING ARRANGEMENTS',
+									'ESOTERICA',
+									'IN"CON"CIEVABLE',
+									'MY OTHER CAR IS A CDR',
+									'I\'LL PARSE YOUR BNF',
+									'FUZZY LOGIC',
+									'MARIO TEACHES DATA TYPING',
+									'STUPID ANSWERS',
+									'STATE<BR>MACHINES']
+var answers = ['THE LANGUAGE OF ALL STRINGS OF A\'S AND B\'S THAT BEGIN WITH A',
+               'THE LANGUAGE CONTAINING ONLY THE EMPTY STRING',
+							 'THE LANGUAGE OF ALL STRINGS OF A\'S AND B\'S WHERE EVERY B IS FOLLOWED IMMEDIATELY BY AN A',
+							 'THE LANGUAGE OF ALL BINARY STRINGS DIVISIBLE BY 4',
+							 'THE LANGUAGE OF ALL BINARY STRINGS DIVISIBLE BY 3',
+							 'THE SHORTEST STRING REPRESENTED BY THE REGULAR EXPRESSION:<BR><PRE>(a+b)*ab*+bba*</PRE>',
+               'THE SHORTEST STRING ACCEPTED BY THE FOLLOWING FINITE STATE MACHINE:<BR><IMG HEIGHT=50% SRC=r1c2a2.png>',
+							 'THE SHORTEST STRING CONTAINING AN a PRODUCED BY THE REGULAR EXPRESSION:<BR><PRE>(ba+abb)*+(bbba)+(bab)</PRE>',
+							 'THE SHORTEST STRING PRODUCED BY THE FOLLOWING CONTEXT FREE GRAMMAR (WITH START SYMBOL A):<BR><PRE>A -> aA | aBB\nB -> A | aB | CaC\nC -> A | Bb | bb</PRE>',
+							 'THE SHORTEST STRING PRODUCED BY THE FOLLOWING EBNF GRAMMAR (WITH INITIAL NONTERMINAL &lt;a&gt;):<BR><PRE>&lt;a&gt; -> {&lt;b&gt; | &lt;c&gt;}\n&lt;b&gt; -> begin &lt;c&gt; end\n&lt;c&gt; -> nope</PRE>',
+							 'A FINITE STATE MACHINE IN WHICH EXACTLY ONE PATH EXISTS FOR EVERY POSSIBLE INPUT IS CALLED THIS.',
+               'THE NUMBER OF STRINGS ACCEPTED BY THE FOLLOWING FINITE STATE MACHINE:<BR><IMG HEIGHT=50% SRC=r1c3a2.png>',
+							 'A STRING OF LENGTH 5 ACCEPTED BY THE FOLLOWING FINITE STATE MACHINE:<BR><IMG HEIGHT=50% SRC=r1c3a3.png>',
+							 'A REGULAR EXPRESSION FOR THE LANGUAGE ACCEPTED BY THE FOLLOWING FINITE STATE MACHINE:<BR><IMG HEIGHT=50% SRC=r1c3a4.png>',
+							 'THE NUMBER OF LANGUAGES THAT EXIST THAT ARE RECOGNIZABLE BY A NONDETERMINISTIC FINITE STATE MACHINE, BUT NOT A DETERMINISTIC ONE.',
+							 'THIS MUST APPEAR ON THE LEFT HAND SIDE OF ALL CONTEXT-FREE GRAMMAR RULES.',
+               'AN EXAMPLE OF A LANGUAGE THAT IS CONTEXT-FREE, BUT NOT REGULAR.',
+							 'THE TYPE OF AUTOMATON WHICH RECOGNIZES CONTEXT-FREE LANGUAGES.',
+							 'A CONTEXT-FREE GRAMMAR WHICH PRODUCES THE SAME LANGUAGE AS THE REGULAR EXPRESSION:<BR><PRE>ab*a(ba)*</PRE>',
+							 'OF UNION, INTERSECTION, AND CONCATENATION, THE ONE UNDER WHICH CONTEXT-FREE LANGUAGES ARE NOT CLOSED.',
+							 'A LANGUAGE THAT HAS DYNAMIC TYPE BINDING.',
+               'FOUR OF THE ATTRIBUTES OF VARIABLES THAT MUST BE BOUND.',
+							 'THIS IS A REFERENCE TO A VARIABLE THAT IS NO LONGER ALLOCATED.',
+							 'OF SCOPE, VALUE, TYPE, AND LIFETIME, THE ONE THAT IS LEAST LIKELY TO BE BOUND AT COMPILE TIME.',
+							 'THIS IS THE COLLECTION OF ALL VARIABLES THAT ARE VISIBLE TO A GIVEN STATEMENT.',
+							 'THE ESOTERIC PROGRAMMING LANGUAGE WHOSE SOURCE CODE CAN BE SEEN HERE:<BR><PRE>>               v\nv"Hello, world!"&lt;\n>,,,,,,,,,,,,@  </PRE>',
+               'THE ESOTERIC PROGRAMMING LANGUAGE WHOSE SOURCE CODE CAN BE SEEN HERE:<BR><PRE>Hamlet, a troubled youth.\nOphelia, a fishmonger.\n     Act I: Preparation</PRE>',
+							 'THE ESOTERIC PROGRAMMING LANGUAGE WHOSE SOURCE CODE CAN BE SEEN HERE:<BR><IMG HEIGHT=50% SRC=r1c6a3.png>',
+							 'THE ESOTERIC PROGRAMMING LANGUAGE WHOSE SOURCE CODE CAN BE SEEN HERE:<BR><PRE>(=&lt;`#9]~6ZY32Vx/4Rs+0No-&amp;Jk)"Fh}|Bcy?`=*z]Kw%oG4UUS0/@-ejc(:\'8dc',
+							 'THE ESOTERIC PROGRAMMING LANGUAGE WHOSE SOURCE CODE CAN BE SEEN HERE:',
+							 'MOST PROGRAMMING LANGUAGES FALL INTO THIS THEORETICAL CATEGORY OF LANGUAGES.',
+               'IF STATEMENTS, WHILE LOOPS, AND FOR LOOPS ARE ALL THESE TYPE OF STRUCTURES.',
+							 'REGULAR LANGUAGES ARE CLOSED UNDER UNION, INTERSECTION, KLEENE STAR, AND THIS.',
+							 'IT\'S THE TERM FOR A LANGUAGE THAT IS NOT CONTEXT-FREE.',
+							 'PROLOG, IN ORDER TO PROVE A GOAL, NEGATES THE GOAL, ADDS THAT TO THE FACTS, AND ATTEMPTS TO FIND THIS.',
+							 'THE EXPRESSION WHICH ADDS 3 AND 4 IN LISP.',
+               'AS OPPOSED TO IMPERATIVE LANGUAGES, LISP IS AN EXAMPLE OF THIS TYPE OF PROGRAMMING LANGUAGE.',
+							 'IT\'S THE VALUE OF THE FOLLOWING LISP EXPRESSION:<BR><PRE>(car (car (cdr (car \'((4 (5 3 2) (1 4)) 7 (3 2 4))))))</PRE>',
+							 'IT\'S THE VALUE OF THE FOLLOWING LISP EXPRESSION:<BR><PRE>(mapcar #\'* \'(3 1 4) \'(7 2 1))</PRE>',
+							 'IT\'S THE VALUE OF THE FOLLOWING LISP EXPRESSION:<BR><PRE>(reduce #\'* \'(7 5 3))</PRE>',
+							 'THIS PARSER, ALSO KNOWN AS AN LL PARSER, USES A FUNCTION FOR EVERY NONTERMINAL SYMBOL.',
+               'ONE OF THE DIFFERENCES BETWEEN BNF AND EBNF.',
+							 'THIS TYPE OF PARSER IS AN IMPLEMENTATION OF A PUSHDOWN AUTOMATON.',
+							 'LEFTMOST DETERMINATION IS A PROPERTY REQUIRED BY LL PARSERS. THIS TEST CAN BE USED TO PROVE LEFTMOST DETERMINATION.',
+							 'IT\'S THE REASON STRINGS IN THE FOLLOWING BNF GRAMMAR CANNOT BE PARSED:<BR><PRE>&lt;a&gt; -> &lt;b&gt; | &lt;c&gt;\n&lt;b&gt; -> b&lt;a&gt;\n\n&lt;c&gt; -> a&lt;b&gt;',
+							 'THESE ARE THE TWO TYPES OF STATEMENTS IN LOGIC PROGRAMMING.',
+               'THIS IS THE NAME OF THE NOTATION USED IN LOGIC PROGRAMMING.',
+							 'GIVEN THE FOLLOWING PROLOG FACTS:<BR><PRE>brother(robert,phillip).\nbrother(robert,bryan).</PRE><BR>IT\'S WHAT PROLOG WOULD RETURN FROM THE QUERY:<BR><PRE>:- brother(bryan,X).</PRE>',
+							 'REPRESENTED BY !, THIS PROLOG CONSTRUCT PREVENTS BACKTRACKING.',
+							 'GIVEN THE FOLLOWING PROLOG FACTS AND RULES:<BR><PRE>p(X,0,X).\np(X,s(Y),Z) :- p(s(X),Y,Z).</PRE>IT\'S WHAT PROLOG WOULD RETURN FROM THE QUERY:<BR><PRE>:- p(s(0),s(s(0)),X).</PRE>',
+							 'IT\'S-A-ME! THE DATA TYPE USED TO EXACTLY REPRESENT BASE-10 NUMBERS!',
+               'YIPPEE! I\'MA THE TYPE THAT ALLOWS MULTIPLE VARIABLES TO OCCUPY THE SAME MEMORY SPACE!',
+							 'OWOWOWOWOW! IN C, I\'MA JUST AN ARRAY OF CHARACTERS!',
+							 'HERE WE GO! I CAN REPRESENT AN INTEGER OF ARBITRARY SIZE.',
+							 'MAMMA MIA! MY LANGUAGE ALWAYS DETECTS TYPE ERRORS AND HAS THIS PROPERTY.',
+							 'IT\'S THE RUNTIME BINDING OF TYPES TO VARIABLES IN A DYNAMIC MANNER.',
+               'THESE FIELD REFERENCES, LIKE AN ELLIPSIS, OMIT THE RECORD NAME.',
+							 'WHEN PASSING PARAMETERS IN THIS WAY, THE NAME OF THE ACTUAL PARAMETER IS SUBSTITUTED IN FOR THE FORMAL PARAMETERS.',
+							 'STATEMENTS IN THIS ESOTERIC PROGRAMMING LANGUAGE ARE EXECUTED WHENEVER THEY FEEL LIKE IT.',
+							 'THESE VALUE TYPES RECORD MULTIPLE DATA ELEMENTS, AND ARE SIMILAR TO OBJECTS (WITHOUT METHODS).',
+							 'THE NUMBER OF FOUR CHARACTER STRINGS ACCEPTED BY THE FOLLOWING FINITE STATE MACHINE:<BR><IMG HEIGHT=50% SRC=fj.png>'];
+var questions = ['WHAT IS a(a+b)*?',
+                 'WHAT IS &Lambda;?',
+								 'WHAT IS (a+ba)*?',
+								 'WHAT IS 0 + (1+0)*00?',
+								 'WHAT IS (0 + 1(01*0)*1)<sup>+</sup>?',
+								 'WHAT IS a?',
+								 'WHAT IS 1?',
+								 'WHAT IS ba?',
+								 'WHAT IS abbabbbbabb?',
+                 'WHAT IS &Lambda;?',
+								 'WHAT IS DETERMINISTIC?',
+								 'WHAT IS 4?',
+								 'WHAT IS 00011? (Also 01000,01101,10010,10111,11100)',
+								 'WHAT IS b*ab*a(b*+ab*a)*?',
+								 'WHAT IS ZERO?',
+								 'WHAT IS A SINGLE NON-TERMINAL SYMBOL?',
+								 'WHAT ARE PALINDROMES? (Many other examples)',
+								 'WHAT IS A PUSHDOWN AUTOMATON?',
+								 'WHAT IS:<BR><PRE>A -> aBaC\nB -> &Lambda; | bB\nC -> &Lambda; | bbC</PRE>',
+								 'WHAT IS INTERSECTION?',
+								 'WHAT IS PHP? (Javascript as well)',
+								 'WHAT ARE FOUR OF NAME, TYPE, ADDRESS, SCOPE, LIFETIME, AND VALUE?',
+								 'WHAT IS A DANGLING REFERENCE?',
+								 'WHAT IS VALUE?',
+								 'WHAT IS A REFERENCING ENVIRONMENT?',
+								 'WHAT IS BEFUNGE?',
+								 'WHAT IS SHAKESPEARE?',
+								 'WHAT IS PIET?',
+								 'WHAT IS MALBOLGE?',
+								 'WHAT IS WHITESPACE?',
+								 'WHAT ARE CONTEXT-FREE LANGUAGES?',
+								 'WHAT ARE CONTROL STRUCTURES?',
+								 'WHAT IS CONATENATION?',
+								 'WHAT IS A CONTEXT-SENSITIVE LANGUAGE?',
+								 'WHAT IS A CONTRADICTION?',
+								 'WHAT IS (+ 3 4)?',
+								 'WHAT IS A FUNCTIONAL PROGRAMMING LANGUAGE?',
+								 'WHAT IS 5?',
+								 'WHAT IS (21 2 4)?',
+								 'WHAT IS 105?',
+								 'WHAT IS A RECURSIVE DESCENT PARSER?',
+								 'WHAT ARE CURLY BRACES FOR REPETITION? (Also square brackets for optionals, and parentheses for internal choices)',
+								 'WHAT IS AN LR PARSER?',
+								 'WHAT IS THE PAIRWISE DISJOINTNESS TEST?',
+								 'WHAT IS IT NEVER TERMINATES?',
+								 'WHAT ARE RULES AND FACTS?',
+								 'WHAT IS FIRST ORDER LOGIC? (Also predicate calculus)',
+								 'WHAT IS false?',
+								 'WHAT IS A CUT?',
+								 'WHAT IS X = s(s(s(0)))?',
+								 'WHAT IS DECIMAL?',
+								 'WHAT IS A UNION?',
+								 'WHAT IS A STRING?',
+								 'WHAT IS A BIG INTEGER?',
+								 'WHAT IS STRONG TYPING?',
+								 'WHAT IS DYNAMIC TYPE BINDING?',
+								 'WHAT IS AN ELLIPTICAL REFERENCE?',
+								 'WHAT IS PASS-BY-NAME?',
+								 'WHAT IS WHENEVER?',
+								 'WHAT IS A RECORD?',
+								 'WHAT IS 3? (0011,1000,1101)']
+							 
+function getBoard() {
+	output = "<TABLE BORDER = 1 WIDTH=100% HEIGHT=88% STYLE='margin: 0px;'>"
+	output += getCategoryRow()
+	for(var i = 0; i < 5; i++) {
+	  output += getQuestionRow(i)
+	}
+	output += "</TABLE>"
+	return output
+}
+
+function getCategoryRow() {
+	output = "<TR HEIGHT=16%>"
+	for(var i = 0; i < 6; i++) {
+		output += "<TD ALIGN = CENTER WIDTH=16%><h2>"+categories[i+(round-1)*6]+"</h2></TD>"
+	}
+	output += "</TR>"
+	return output
+}
+
+function getQuestionRow(k) {
+	output = "<TR HEIGHT=16%>"
+	for(var i = 0; i < 6; i++) {
+		output += "<TD ALIGN='center' VALIGN='center' WIDTH=16%>"
+		if(((1<<(k+i*5))&used) == 0) {
+			output += "<h3><A ONCLICK='"
+				output += "answer("+(k+i*5)+")"
+			output += "'>"+(k+1)*scale*round+"</A></h3>"
+		}
+		output += "</TD>"
+	}
+	output += "</TR>"
+	return output
+}
+
+function intro() {
+	document.getElementById('main').innerHTML = "<TABLE WIDTH=100% HEIGHT=100% STYLE='margin: 0px;'><TR HEIGHT = 100%><TD WIDTH = 100% ALIGN='center' VALIGN='center'><H4><A ONCLICK='category(0)'>JEOPARDY!<BR>STUDY EDITION</A></H4></TD></TR></TABLE>";
+}
+
+function category(a) {
+	output = 
+	"<TABLE WIDTH=100% HEIGHT=88% STYLE='margin: 0px;'><TR HEIGHT = 100%><TD WIDTH = 100% ALIGN='center' VALIGN='center'><H4><A ONCLICK='"
+	if(a==5) {
+	  output += "returnToBoard()"
+	}
+	else {
+	  output += "category("+(a+1)+")"
+	}
+	output += "'>"+categories[a+(round-1)*6]+"</A></H4></TD></TR></TABLE>"
+	document.getElementById('main').innerHTML = output
+}
+
+function nextRound() {
+	used = (1<<30)-1
+	returnToBoard()
+}
+								
+function answer(a) {
+	document.getElementById('main').innerHTML = "<TABLE WIDTH=100% HEIGHT=88% STYLE='margin: 0px;'><TR HEIGHT = 100%><TD WIDTH = 100% ALIGN='center' VALIGN='center'><H1><A ONCLICK='question("+a+")'>"+answers[a+(round-1)*30]+"</A></H1></TD></TR></TABLE>";
+	used |= (1<<a);
+}
+
+function question(a) {
+	document.getElementById('main').innerHTML = "<TABLE WIDTH=100% HEIGHT=88% STYLE='margin: 0px;'><TR HEIGHT = 100%><TD WIDTH = 100% ALIGN='center' VALIGN='center'><H1><A ONCLICK='returnToBoard()'>"+questions[a+(round-1)*30]+"</A></H1></TD></TR></TABLE>";
+}
+
+function returnToBoard() {
+		if(used!=(1<<30)-1) {
+		  document.getElementById('main').innerHTML = getBoard()
+		}
+		else if(round==1)
+		{
+			round++;
+			used=0;
+			category(0);
+		}
+		else {
+		  finalJeopardy();
+		}
+}
+
+function finalJeopardy() {
+	document.getElementById('main').innerHTML = "<TABLE WIDTH=100% HEIGHT=88% STYLE='margin: 0px;'><TR HEIGHT = 100%><TD WIDTH = 100% ALIGN='center' VALIGN='center'><H4><A ONCLICK='fjc()'>FINAL<BR>JEOPARDY!</A></H4></TD></TR></TABLE>";
+}
+
+function fjc() {
+	document.getElementById('main').innerHTML = "<TABLE WIDTH=100% HEIGHT=88% STYLE='margin: 0px;'><TR HEIGHT = 100%><TD WIDTH = 100% ALIGN='center' VALIGN='center'><H4><A ONCLICK='fjq()'>"+categories[categories.length-1]+"</A></H4></TD></TR></TABLE>";
+}
+
+function fjq() {
+	document.getElementById('main').innerHTML = "<TABLE WIDTH=100% HEIGHT=88% STYLE='margin: 0px;'><TR HEIGHT = 100%><TD WIDTH = 100% ALIGN='center' VALIGN='center'><H1><A ONCLICK='fja()'>"+answers[answers.length-1]+"</A></H1></TD></TR></TABLE>";	
+}
+
+function fja() {
+	document.getElementById('main').innerHTML = "<TABLE WIDTH=100% HEIGHT=88% STYLE='margin: 0px;'><TR HEIGHT = 100%><TD WIDTH = 100% ALIGN='center' VALIGN='center'><H1>"+questions[questions.length-1]+"</H1></TD></TR></TABLE>";	
+}
+
+window.onload = function() {
+		intro();
+		//document.getElementById('trialclick').addEventListener("click",getTrial);
+		//document.getElementById('trialclick').addEventListener("touchstart",getTrial,false);
+		//document.getElementById('resclick').addEventListener("click",getRestriction);
+    //document.getElementById('resclick').addEventListener("touchstart",getRestriction,false);
+}
+-->
+</script>
+<head>
+<body bgcolor = #0000FF>
+<div id='main'>
+</div>
+</body>
+</html>
